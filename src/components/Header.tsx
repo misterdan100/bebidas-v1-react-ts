@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppStore } from "../stores/useAppStore";
 
@@ -23,6 +23,19 @@ export default function Header() {
       ...searchFilters,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    //TODO: validate
+    if(Object.values(searchFilters).includes('')) {
+      console.log('All fields are required!')
+      return
+    } 
+
+    // CHECK OUT THE RECIPES
+
   }
 
   return (
@@ -60,6 +73,7 @@ export default function Header() {
         {isHome && (
             <form 
                 className="md: w-1/2 2xl:w-1/3 bg-gray-700 my-16 p-8 rounded-xl shadow space-y-10"
+                onSubmit={handleSubmit}
             >
                 <div className="space-y-4">
                     <label 
@@ -95,7 +109,7 @@ export default function Header() {
                 </div>
 
                 <input 
-                    type="text" 
+                    type="submit" 
                     value={'Search recipes'}
                     className="cursor-pointer uppercase bg-orange-600 hover:bg-orange-700 transition text-white font-bold w-full py-2 px-4 rounded-xl text-center"
                 />

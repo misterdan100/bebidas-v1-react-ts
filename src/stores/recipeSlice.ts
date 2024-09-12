@@ -17,6 +17,6 @@ export const createRecipesSlice: StateCreator<RecipesSliceType> = (set) => ({
         set({
             categories: categories
         })
-    }
+    },
 
 })
