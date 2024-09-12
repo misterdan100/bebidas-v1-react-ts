@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 export default function Header() {
@@ -6,7 +7,7 @@ export default function Header() {
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
   return (
-    <header className="bg-slate-800">
+    <header className="bg-slate-800 transition">
       <div className="mx-auto container px-5 py-10">
         <div className="flex justify-between items-center">
           <div>
@@ -36,6 +37,46 @@ export default function Header() {
             </NavLink>
           </div>
         </div>
+        
+        {isHome && (
+            <form 
+                className="md: w-1/2 2xl:w-1/3 bg-gray-700 my-16 p-8 rounded-xl shadow space-y-10"
+            >
+                <div className="space-y-4">
+                    <label 
+                        htmlFor="ingredient"
+                        className="block text-white uppercase font-bold text-lg"
+                    >Name or Ingredients</label>
+                    <input type="text" 
+                    id="ingredient"
+                    name="ingredient"
+                    className="p-3 w-full rounded-lg focus:outline-none"
+                    placeholder="Example: Vodka, Whiskey, Coffee"
+                    />
+                </div>
+
+                <div className="space-y-4">
+                    <label 
+                        htmlFor="category"
+                        className="block text-white uppercase font-bold text-lg"
+                    >Categorys</label>
+                    <select 
+                        id="category"
+                        name="category"
+                        className="p-3 w-full rounded-lg focus:outline-none"
+                    >
+                        <option value="" className="text-gray-200">Select one</option>
+                    </select>
+                </div>
+
+                <input 
+                    type="text" 
+                    value={'Search recipes'}
+                    className="cursor-pointer uppercase bg-orange-600 hover:bg-orange-700 transition text-white font-bold w-full py-2 px-4 rounded-xl text-center"
+                />
+            </form>
+        )}
+
       </div>
     </header>
   );
