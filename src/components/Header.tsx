@@ -11,8 +11,9 @@ export default function Header() {
 
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
-  const fetchCategories = useAppStore((state) => state.fetchCategories)
   const categories = useAppStore((state) => state.categories)
+  const fetchCategories = useAppStore((state) => state.fetchCategories)
+  const searchRecipes = useAppStore((state) => state.searchRecipes)
 
   useEffect(() => {
     fetchCategories()
@@ -35,13 +36,13 @@ export default function Header() {
     } 
 
     // CHECK OUT THE RECIPES
-
+    searchRecipes(searchFilters)
   }
 
   return (
     <header className={isHome ? 'bg-header-image bg-center bg-cover transition' : 'bg-slate-800 transition'}>
-      <div className="mx-auto container px-5 py-10">
-        <div className="flex justify-between items-center">
+      <div className="container px-5 py-10 mx-auto">
+        <div className="flex items-center justify-between">
           <div>
             <img src="/logo.svg" alt="logotipo" className="w-32" />
           </div>
@@ -72,35 +73,37 @@ export default function Header() {
         
         {isHome && (
             <form 
-                className="md: w-1/2 2xl:w-1/3 bg-gray-700 my-16 p-8 rounded-xl shadow space-y-10"
+                className="w-1/2 p-8 my-16 space-y-10 bg-gray-700 shadow md: 2xl:w-1/3 rounded-xl"
                 onSubmit={handleSubmit}
             >
                 <div className="space-y-4">
                     <label 
                         htmlFor="ingredient"
-                        className="block text-white uppercase font-bold text-lg"
+                        className="block text-lg font-bold text-white uppercase"
                     >Name or Ingredients</label>
                     <input type="text" 
                     id="ingredient"
                     name="ingredient"
-                    className="p-3 w-full rounded-lg focus:outline-none"
+                    className="w-full p-3 rounded-lg focus:outline-none"
                     placeholder="Example: Vodka, Whiskey, Coffee"
                     onChange={handleChange}
+                    value={searchFilters.ingredient}
                     />
                 </div>
 
                 <div className="space-y-4">
                     <label 
                         htmlFor="category"
-                        className="block text-white uppercase font-bold text-lg"
+                        className="block text-lg font-bold text-white uppercase"
                     >Categorys</label>
                     <select 
                         id="category"
                         name="category"
-                        className="p-3 w-full rounded-lg focus:outline-none"
+                        className="w-full p-3 rounded-lg focus:outline-none"
                         onChange={handleChange}
+                        value={searchFilters.category}
                     >
-                        <option value="" disabled>Select one</option>
+                        <option value="">Select one</option>
                         {categories.drinks.map(category => (
                           
                           <option key={category.strCategory} value={category.strCategory} >{category.strCategory}</option>
@@ -111,7 +114,7 @@ export default function Header() {
                 <input 
                     type="submit" 
                     value={'Search recipes'}
-                    className="cursor-pointer uppercase bg-orange-600 hover:bg-orange-700 transition text-white font-bold w-full py-2 px-4 rounded-xl text-center"
+                    className="w-full px-4 py-2 font-bold text-center text-white uppercase transition bg-orange-600 cursor-pointer hover:bg-orange-700 rounded-xl"
                 />
             </form>
         )}
