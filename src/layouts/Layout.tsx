@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <>
         <Header />
-        <main className="container mx-auto py-10">
+        <main className="container px-3 py-10 mx-auto">
             <Outlet />
         </main>
     </>
